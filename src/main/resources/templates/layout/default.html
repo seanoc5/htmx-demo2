@@ -1,91 +1,78 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      class="h-full bg-gray-100">
 <head>
     <meta charset="UTF-8">
+    <meta description="Template: default.html (should be overridden by specific templates)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:title-pattern="$CONTENT_TITLE - Chunk Tagger">Chunk Tagger</title>
-    
+    <title layout:title-pattern="$CONTENT_TITLE::$LAYOUT_TITLE">Chunk Tagger</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
-    
+
     <!-- Custom styles -->
-    <style>
-        body {
-            padding-top: 56px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex: 1;
-        }
-        .footer {
-            margin-top: auto;
-            background-color: #f8f9fa;
-            padding: 1rem 0;
-        }
-        .htmx-indicator {
-            display: none;
-        }
-        .htmx-request .htmx-indicator {
-            display: block;
-        }
-        .htmx-request.htmx-indicator {
-            display: block;
-        }
-    </style>
-    
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+
     <!-- Any additional head content per page -->
     <th:block layout:fragment="head"></th:block>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Chunk Tagger</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/search-hits}">Search Hits</a>
-                    </li>
-                    <!-- Add more navigation links as needed -->
-                </ul>
-            </div>
+<!-- Navigation -->
+<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">HTMX Demo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/concepts}">Concepts</a>
+                </li>
+                <!-- Add more navigation links as needed -->
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Main content -->
-    <main class="py-4">
-        <th:block layout:fragment="content"></th:block>
-    </main>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="text-muted mb-0">Chunk Tagger &copy; 2025</p>
-                </div>
+<!-- Main content -->
+<main class="py-4">
+    <div layout:fragment="content">
+        <h3>!!Default Template 2 Content placeholder!!</h3>
+        <p>This is the default content for the main content area. It should be overridden by specific templates.</p>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:fragment="footer" class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="text-muted mb-0">Chunk Tagger &copy; 2025</p>
             </div>
         </div>
-    </footer>
-    
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Any additional scripts per page -->
-    <th:block layout:fragment="scripts"></th:block>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Any additional scripts per page -->
+<th:block layout:fragment="scripts">
+<!-- Default/placeholder for default.html template for scripts this should be replaced -->
+<script th:inline="javascript">
+    console.log("placeholder log message form default.html template here...");
+</script>
+</th:block>
 </body>
 </html>

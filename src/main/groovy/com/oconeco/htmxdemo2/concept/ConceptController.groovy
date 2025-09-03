@@ -1,6 +1,7 @@
 package com.oconeco.htmxdemo2.concept;
 
-import com.oconeco.trebuchet.util.WebUtils;
+import com.oconeco.htmxdemo2.util.WebUtils;
+import groovy.util.logging.Slf4j;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/concepts")
 public class ConceptController {
@@ -23,15 +24,28 @@ public class ConceptController {
         this.conceptService = conceptService;
     }
 
-    @GetMapping
+    @GetMapping(['', '/', '/index'])
     public String list(@RequestParam(name = "filter", required = false) final String filter,
             @SortDefault(sort = "id") @PageableDefault(size = 20) final Pageable pageable,
             final Model model) {
         final Page<ConceptDTO> concepts = conceptService.findAll(filter, pageable);
+        log.info("({}) list concepts totalcount:({}) in {} pages) -- with filter:'{}'",concepts.getContent().size(), concepts.getTotalElements(), concepts.getTotalPages(), filter);
         model.addAttribute("concepts", concepts);
         model.addAttribute("filter", filter);
         model.addAttribute("paginationModel", WebUtils.getPaginationModel(concepts));
-        return "concept/list";
+        return "concept/index";
+    }
+
+    @GetMapping(['/filter'])
+    public String filter(@RequestParam(name = "filter", required = true) final String filter,
+            @SortDefault(sort = "address") @PageableDefault(size = 20) final Pageable pageable,
+            final Model model) {
+        final Page<ConceptDTO> concepts = conceptService.filter(filter, pageable);
+        log.info("({}) filtered concepts totalcount:({}) in {} pages) -- with filter:'{}'",concepts.getContent().size(), concepts.getTotalElements(), concepts.getTotalPages(), filter);
+        model.addAttribute("concepts", concepts);
+        model.addAttribute("filter", filter);
+        model.addAttribute("paginationModel", WebUtils.getPaginationModel(concepts));
+        return "concept/index";
     }
 
     @GetMapping("/add")

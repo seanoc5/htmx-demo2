@@ -2,17 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title>Home Page</title>
+    <title>Concepts</title>
 </head>
 
 <body>
 <section layout:fragment="content">
-    <h3>Test 4</h3>
-    <div>Main content of the page goes here</div>
-    <p>this should replace the template</p>
+    <h3>Concepts List/browse/search</h3>
+    <div>This is a list of concepts</div>
+
+    <div>
+        <ul>
+            <li th:each="concept : ${concepts}">
+                (<span th:text="${concept.address}">address</span>) -
+                "<span th:text="${concept.label}">label</span>"
+                <span th:text="${concept.description}">decrption</span>
+            </li>
+        </ul>
+    </div>
 </section>
 
 <footer th:fragment="footer">
     this is the footer for the index page (should replace the template)
 </footer>
+<th:block layout:fragment="scripts">
+<!-- Custom scripts, from page: index.html -->
+<script th:inline="javascript">
+    console.log("Custom scripts for index.html");
+</script>
+</th:block>
 </body>
+</html>

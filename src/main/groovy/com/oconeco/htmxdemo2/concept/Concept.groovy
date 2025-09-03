@@ -26,11 +26,14 @@ public class Concept {
     )
     private Long id;
 
+    @Column(columnDefinition = "text")
+    String address
+
     @Column
     private String label;
 
     @Column(columnDefinition = "text")
-    private String descrption;
+    private String description;
 
     @Column(columnDefinition = "text")
     private String keywords;
@@ -49,4 +52,8 @@ public class Concept {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    String toString() {
+        String s = "($address) $label [$id]"
+        return s
+    }
 }

@@ -1,0 +1,26 @@
+body {
+    padding-top: 56px;
+    /*padding-bottom: 3rem;*/
+    padding-left: 3rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+    outline: 1px solid #eaeaea;
+}
+.footer {
+    margin-top: auto;
+    background-color: #f8f9fa;
+    /*padding: 1rem 0;*/
+}
+.htmx-indicator {
+    display: none;
+}
+.htmx-request .htmx-indicator {
+    display: block;
+}
+.htmx-request.htmx-indicator {
+    display: block;
+}
