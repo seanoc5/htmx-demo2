@@ -32,9 +32,9 @@ public class ConceptServiceImpl implements ConceptService {
             Long longFilter = null;
             try {
                 longFilter = Long.parseLong(filter);
-                log.warn("Filter by ID: {} -- NOTE: likely to remove this", longFilter);
+                log.warn("findAllById: {} -- NOTE: likely to remove this", longFilter);
             } catch (final NumberFormatException numberFormatException) {
-                log.info("Could not parse filter to long: {}, error: {}", filter, numberFormatException.getMessage());
+                log.info("findAllById: Could not parse filter to long: {}, error: {}", filter, numberFormatException.getMessage());
             }
             page = conceptRepository.findAllById(longFilter, pageable);
         } else {
@@ -49,8 +49,9 @@ public class ConceptServiceImpl implements ConceptService {
 
     @Override
     Page<ConceptDTO> filter(String filter, Pageable pageable) {
-        Page<Concept> page = conceptRepository.filter(filter, pageable)
-        log.info("({}) concepts totalcount:({}) in {} pages) -- with filter:'{}'",page.getContent().size(), page.getTotalElements(), page.getTotalPages(), filter);
+        String filterString = '%' + filter + '%'
+        Page<Concept> page = conceptRepository.filter(filterString, pageable)
+        log.info("({}) concepts filter totalcount:({}) in {} pages) -- with filter:'{}'",page.getContent().size(), page.getTotalElements(), page.getTotalPages(), filter);
         def pageImpl = new PageImpl<>(page.getContent()
                 .stream()
                 .map(concept -> updateConceptDTO(concept, new ConceptDTO()))
@@ -58,6 +59,19 @@ public class ConceptServiceImpl implements ConceptService {
                 pageable, page.getTotalElements());
         return pageImpl
     }
+
+    @Override
+    Page<ConceptDTO> search(String filter, Pageable pageable) {
+        Page<Concept> page = conceptRepository.findByLabelContainingOrDescriptionContainingOrAddressContainingIgnoreCase(filter, filter, filter,pageable)
+        log.info("({}) concepts search totalcount:({}) in {} pages) -- with filter:'{}'",page.getContent().size(), page.getTotalElements(), page.getTotalPages(), filter);
+        def pageImpl = new PageImpl<>(page.getContent()
+                .stream()
+                .map(concept -> updateConceptDTO(concept, new ConceptDTO()))
+                .toList(),
+                pageable, page.getTotalElements());
+        return pageImpl
+    }
+
 
     @Override
     public ConceptDTO get(final Long id) {
@@ -96,7 +110,7 @@ public class ConceptServiceImpl implements ConceptService {
                 .stream()
                 .collect(CustomCollectors.toSortedMap(Concept::getId, Concept::getId));
     }
-    
+
     // Add direct mapping methods to replace ConceptMapper
     private ConceptDTO updateConceptDTO(Concept concept, ConceptDTO conceptDTO) {
         conceptDTO.id = concept.id

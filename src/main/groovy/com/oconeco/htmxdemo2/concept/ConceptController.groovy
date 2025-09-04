@@ -48,6 +48,32 @@ public class ConceptController {
         return "concept/index";
     }
 
+    @GetMapping(['/sayt'])
+    public String searchAsYouType(@RequestParam(name = "filter", required = false) final String filter,
+            @SortDefault(sort = "address") @PageableDefault(size = 10) final Pageable pageable,
+            final Model model) {
+        final Page<ConceptDTO> concepts = (filter != null && !filter.isEmpty()) 
+            ? conceptService.search(filter, pageable) 
+            : conceptService.findAll(null, pageable);
+        log.info("SAYT: ({}) filtered concepts totalcount:({}) in {} pages) -- with filter:'{}'",
+            concepts.getContent().size(), concepts.getTotalElements(), concepts.getTotalPages(), filter);
+        model.addAttribute("concepts", concepts);
+        model.addAttribute("filter", filter);
+        return "concept/fragments/concept-list :: conceptList";
+    }
+
+    @GetMapping(['/search'])
+    public String search(@RequestParam(name = "filter", required = true) final String filter,
+            @SortDefault(sort = "address") @PageableDefault(size = 20) final Pageable pageable,
+            final Model model) {
+        final Page<ConceptDTO> concepts = conceptService.search(filter, pageable);
+        log.info("({}) filtered concepts totalcount:({}) in {} pages) -- with filter:'{}'",concepts.getContent().size(), concepts.getTotalElements(), concepts.getTotalPages(), filter);
+        model.addAttribute("concepts", concepts);
+        model.addAttribute("filter", filter);
+        model.addAttribute("paginationModel", WebUtils.getPaginationModel(concepts));
+        return "concept/index";
+    }
+
     @GetMapping("/add")
     public String add(@ModelAttribute("concept") final ConceptDTO conceptDTO) {
         return "concept/add";

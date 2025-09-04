@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.oconeco'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.1'
 description = 'htmx-demo2'
 
 java {
@@ -28,7 +28,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'io.github.wimdeblauwe:htmx-spring-boot-thymeleaf:4.0.1'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.4.0'
-//	implementation 'thymeleaf-layout-dialect'
 
 	implementation 'org.apache.groovy:groovy'
 	implementation 'org.mapstruct:mapstruct:1.6.3'

@@ -8,16 +8,30 @@
 <body>
 <section layout:fragment="content">
     <h3>Concepts List/browse/search</h3>
-    <div>This is a list of concepts</div>
+    <div class="mb-4">
+        <label for="search-input" class="form-label">Search Concepts</label>
+        <input 
+            type="text" 
+            id="search-input" 
+            class="form-control" 
+            name="filter" 
+            th:value="${filter}"
+            placeholder="Start typing to search..."
+            hx-get="/concepts/sayt"
+            hx-trigger="keyup changed delay:300ms, search"
+            hx-target="#results-container"
+            hx-indicator="#search-indicator"
+        />
+        <div id="search-indicator" class="htmx-indicator mt-2">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            Searching...
+        </div>
+    </div>
 
-    <div>
-        <ul>
-            <li th:each="concept : ${concepts}">
-                (<span th:text="${concept.address}">address</span>) -
-                "<span th:text="${concept.label}">label</span>"
-                <span th:text="${concept.description}">decrption</span>
-            </li>
-        </ul>
+    <div id="results-container">
+        <div th:replace="concept/fragments/concept-list :: conceptList"></div>
     </div>
 </section>
 

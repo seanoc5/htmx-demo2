@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Fragment for the concept list -->
+    <div th:fragment="conceptList">
+        <ul class="list-group">
+            <li th:if="${concepts.empty}" class="list-group-item">No concepts found</li>
+            <li th:each="concept : ${concepts}" class="list-group-item">
+                (<span th:text="${concept.address}">address</span>) -
+                "<span th:text="${concept.label}">label</span>"
+                <span th:text="${concept.description}">description</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

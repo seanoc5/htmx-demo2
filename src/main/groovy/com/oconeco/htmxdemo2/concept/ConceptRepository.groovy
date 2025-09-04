@@ -14,5 +14,8 @@ public interface ConceptRepository extends JpaRepository<Concept, Long> {
     @Query(value = "SELECT c FROM Concept c WHERE c.label ILIKE :filter")
     Page<Concept> filter(@Param("filter") String filter, Pageable pageable);
 
+    Page<Concept> findByLabelContainingIgnoreCase(String filter, Pageable pageable);
+
+    Page<Concept> findByLabelContainingOrDescriptionContainingOrAddressContainingIgnoreCase(String lbl, String descr, String addr, Pageable pageable);
 
 }

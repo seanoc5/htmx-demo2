@@ -23,4 +23,5 @@ public interface ConceptService {
 
     Map<Long, Long> getConceptValues();
 
+    Page<ConceptDTO> search(String filter, Pageable pageable);
 }
